@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>끝말잇기</title>
+</head>
+<body>
+    <div><span id="order">1</span>번째 참가자</div>
+    <div>제시어: <span id="word"></span></div>
+    <input type="text">
+    <button>입력</button>
+    <br>
+    <br>
+    <div>기록: <span id="memory"></span></div>
+    <script>
+        //const number = Number(prompt('몇 명이 참가하나요?'));
+        const $button = document.querySelector('button');
+        const $input =  document.querySelector('input');
+        const $word = document.querySelector('#word');
+        const $memory = document.querySelector('#memory');
+        const $order = document.querySelector('#order');
+        let word; // 단어입력시 마다 바뀌므로 let
+        let newWord; //현재단어
+        let number
+        /*alert(Number.isNaN('aplet'))
+        while(Number.isNaN(number)){
+            number = Number(prompt('몇 명이 참가하나요? (숫자만 입력해 주세요.)'));
+            alert(Number.isNaN(number))
+        }*/
+        while(true){
+            number = Number(prompt('몇 명이 참가하나요? (숫자만 입력해 주세요.)'));
+            if(!Number.isNaN(number) && number != ''){
+                breck;
+            }
+        }
+
+        const onClickButton = () => {
+            if(newWord.length !== 3){
+                alert('입력글자는 딱 3글자이여야 합니다.')
+                $input.value = '';
+                $input.focus();
+            }else if(!word||word[word.length - 1] === newWord[0]){//제시어가 비어있는가?
+                //비어 있다.
+                word = newWord;
+                $word.textContent = word; // 화면에 제시어 표시
+                const order = Number($order.textContent); //현재수 가져오기
+                if(order + 1 > number){ // 현재수 + 1 이후 참가 수와 비교
+                    $order.textContent = 1; // 커질시 1로 돌림
+                }else{
+                    $order.textContent = order + 1; //작을시 + 1 입력
+                }
+                const text = $memory.textContent;
+                if(!text){
+                    $memory.textContent = word;
+                }else{
+                    $memory.textContent = text + ' - ' + word;
+                }
+                $input.value = '';
+                $input.focus();
+            }else{
+                //올마르지 않다
+                alert('올바르지 않은 단어 입니다.');
+                $input.value = '';
+                $input.focus();
+            }
+            
+        };
+        const onInput = (event) => {
+            //console.log('글자입력', event.target.value);
+            newWord = event.target.value;
+        };
+
+        $button.addEventListener('click', onClickButton);
+        $input.addEventListener('input', onInput);
+    </script>
+</body>
+</html>
